@@ -174,10 +174,12 @@ instance Functor NotEmpty where
 instance Applicative NotEmpty where
   -- TODO
   pure a = LastValue a
-  (MidValue a b) <*> (MidValue c d) = MidValue (a c) (b <*> d)
-  (MidValue a b) <*> (LastValue c) = MidValue (a c) (b <*> LastValue c)
-  (LastValue a) <*> (MidValue b c) = MidValue (a b) (a <$> c)
-  (LastValue a) <*> (LastValue b) = LastValue $ a b
+  --(MidValue a b) <*> (MidValue c d) = MidValue (a c) (b <*> d)
+  --(MidValue a b) <*> (LastValue c) = MidValue (a c) (b <*> LastValue c)
+  --(LastValue a) <*> (MidValue b c) = MidValue (a b) (a <$> c)
+  --(LastValue a) <*> (LastValue b) = LastValue $ a b
+  (MidValue a b) <*> x = (a <$> x) <> (b <*> x)
+  (LastValue a) <*> x = a <$> x
 
 instance Monad NotEmpty where
   -- TODO
